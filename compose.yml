@@ -29,10 +29,11 @@ x-base-php: &php-base
     - php_static_files:/app/public:rw
     - jwt_keys:/app/config/jwt
     - job_files:/app/var/job:rw
+    # App cache pools (filesystem adapter), shared by php and cron so that cache entries and tag invalidations are seen by both
+    - cache_pools:/app/var/cache-pools:rw
   depends_on:
     - database
     - search
-    - redis
   environment: *php-base-env
 
 services:
@@ -107,6 +108,8 @@ services:
       <<: *php-base-env
       CRONTAB: |
         * * * * * cd /app && { echo "[$(date '+\%Y-\%m-\%d \%H:\%M:\%S')] messenger:consume async"; flock -n /tmp/gally_messenger.lock /usr/local/bin/php bin/console messenger:consume async -vv --limit=10 --time-limit=30 --memory-limit=128M; } >> /proc/1/fd/1 2>> /proc/1/fd/2
+        # The filesystem cache adapter never removes expired entries by itself
+        0 * * * * cd /app && { echo "[$(date '+\%Y-\%m-\%d \%H:\%M:\%S')] cache:pool:prune"; flock -n /tmp/gally_cache_prune.lock /usr/local/bin/php bin/console cache:pool:prune; } >> /proc/1/fd/1 2>> /proc/1/fd/2
         * * * * * cd /app && { echo "[$(date '+\%Y-\%m-\%d \%H:\%M:\%S')] messenger:consume tracking"; flock -n /tmp/gally_messenger_tracking.lock /usr/local/bin/php bin/console messenger:consume tracking -vv --limit=1000 --time-limit=30 --memory-limit=128M; } >> /proc/1/fd/1 2>> /proc/1/fd/2
     healthcheck:
       test: [ "CMD", "pgrep", "cron" ]
@@ -154,15 +157,6 @@ services:
       # - ./api/docker/db/data:/var/lib/postgresql/data
   ###< doctrine/doctrine-bundle ###
 
-  redis:
-    image: redis:6.2
-    environment:
-      # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - ALLOW_EMPTY_PASSWORD=yes
-      # - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
-    volumes:
-      - 'redis_data:/data'
-
   search:
     build:
       context: docker/search/
@@ -207,9 +201,8 @@ volumes:
   php_static_files:
   jwt_keys:
   job_files:
+  cache_pools:
 ###> doctrine/doctrine-bundle ###
   db_data:
 ###< doctrine/doctrine-bundle ###
   os2_data:
-  redis_data:
-    driver: local

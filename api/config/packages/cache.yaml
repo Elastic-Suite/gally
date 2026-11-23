@@ -18,5 +18,10 @@ framework:
         #pools:
             #my.dedicated.cache: null
 
-        app: cache.adapter.redis_tag_aware
-        default_redis_provider: "%env(REDIS_SERVER)%"
+        # Filesystem pools, outside of var/cache so that they survive cache:clear and deploys.
+        # The directory must be shared by every process using the cache (php and cron), see the cache_pools volume in compose.yml,
+        # which limits this setup to a single host: for several hosts, use a shared backend such as Redis instead:
+        #app: cache.adapter.redis_tag_aware
+        #default_redis_provider: "%env(REDIS_SERVER)%"
+        app: cache.adapter.filesystem
+        directory: '%kernel.project_dir%/var/cache-pools'
