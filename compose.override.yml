@@ -17,24 +17,22 @@ x-base-php: &php-base
   tty: true
 
 services:
-  proxy:
-    ports: !override
-      - "${HTTP_PORT:-80}:80"
-      - "${HTTPS_PORT:-443}:443"
-    environment:
-      - HTTPS_PORT=${HTTPS_PORT:-443}
-
   certbot:
     environment:
       - SELF_SIGNED=true
 
   router:
+    ports: !override
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
     volumes:
       - ./api/public:/app/public
     depends_on:
-      - example
+      example:
+        condition: service_started
     environment:
       - EXAMPLE_UPSTREAM=example:3001
+      - HTTPS_PORT=${HTTPS_PORT:-443}
 
   php:
     <<: *php-base

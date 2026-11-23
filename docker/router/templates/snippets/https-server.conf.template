@@ -1,0 +1,11 @@
+# HTTPS server, enabled at startup when HTTPS_ENABLED=true (certificates are provided by the certbot service)
+server {
+    server_name $SERVER_NAME;
+    listen 443 ssl;
+    set $gally_server_port {{HTTPS_PORT}};
+
+    ssl_certificate /etc/nginx/certs/live/$SERVER_NAME/fullchain.pem;
+    ssl_certificate_key /etc/nginx/certs/live/$SERVER_NAME/privkey.pem;
+
+    include /etc/nginx/conf.d/snippets/app.conf;
+}

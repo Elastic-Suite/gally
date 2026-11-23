@@ -36,24 +36,6 @@ x-base-php: &php-base
   environment: *php-base-env
 
 services:
-  proxy:
-    build:
-      context: ./docker/proxy
-    ports: 
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./docker/certbot/certs:/etc/nginx/certs
-      - ./docker/certbot/www:/var/www/certbot
-    depends_on:
-      router:
-        condition: service_started
-      certbot:
-          condition: service_healthy
-    environment:
-      - SERVER_NAME=${SERVER_NAME:-gally.localhost}
-      - BACKEND_UPSTREAM=router:80
-        
   certbot:
     build:
       context: ./docker/certbot
@@ -66,17 +48,28 @@ services:
   router:
     build:
       context: ./docker/router
+    ports:
+      - "80:80"
+      - "443:443"
     volumes:
       - php_static_files:/app/public:ro
+      - ./docker/certbot/certs:/etc/nginx/certs:ro
+      - ./docker/certbot/www:/var/www/certbot:ro
     depends_on:
-      - php
-      - pwa 
+      php:
+        condition: service_started
+      pwa:
+        condition: service_started
+      certbot:
+        condition: service_healthy
     environment:
       - SERVER_NAME=${SERVER_NAME:-gally.localhost}
       - API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-api}
       - PWA_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
       - API_UPSTREAM=${API_UPSTREAM:-php:9000}
       - EXAMPLE_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
+      # Set to false when TLS is terminated upstream (Traefik, ingress, load balancer...): the app is then served over plain HTTP on port 80
+      - HTTPS_ENABLED=${HTTPS_ENABLED:-true}
     labels:
       - traefik.enable=true
       # Serve gally over http
@@ -86,6 +79,7 @@ services:
       - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.rule=Host(`${SERVER_NAME:-gally.localhost}`)
       - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.entrypoints=https
       - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.tls=true
+      - traefik.http.services.gally-$COMPOSE_PROJECT_NAME.loadbalancer.server.port=80
 
   php:
     <<: *php-base
