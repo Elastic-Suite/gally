@@ -6,13 +6,9 @@ client_max_body_size 256m;
 fastcgi_buffers 64 16k;
 fastcgi_buffer_size 64k;
 
-location / {
-    proxy_pass http://$PWA_UPSTREAM;
-}
-
-location ~ ^/(example|ws) {
-    proxy_pass http://$EXAMPLE_UPSTREAM;
-}
+# Front apps: proxied to node containers when PWA_UPSTREAM / EXAMPLE_UPSTREAM are set (dev, CI, int),
+# otherwise the pre-rendered admin is served from the image. Generated at startup, see docker-entrypoint.d/25-replace-custom-var-env.sh
+include /etc/nginx/conf.d/snippets/front.conf;
 
 location /{{API_ROUTE_PREFIX}} {
     rewrite ^/{{API_ROUTE_PREFIX}}/(.*)$ /$1 break;

@@ -1,0 +1,28 @@
+# Pre-rendered admin (see gally_admin_build in the router Dockerfile), used when PWA_UPSTREAM is empty.
+# Mirrors what `next start` did: redirects from front/pwa/next.config.js, catch-all routes, locale prefixes.
+absolute_redirect off;
+
+location / {
+    root /app/admin;
+    add_header Cache-Control "no-cache";
+    try_files $uri $uri.html $uri/index.html =404;
+    error_page 404 /404.html;
+}
+
+location /_next/static/ {
+    root /app/admin;
+    add_header Cache-Control "public, max-age=31536000, immutable";
+}
+
+# Redirects from next.config.js
+location ~ "^(?<admin_locale>/[a-z]{2})?/admin/settings(/scope)?/?$" {
+    return 301 $admin_locale/admin/settings/scope/catalogs;
+}
+
+# Catch-all pages (pages/admin/<section>/[...slug].tsx)
+location ~ "^(?<admin_locale>/[a-z]{2})?/admin/(?<admin_section>settings|importexport)/" {
+    root /app/admin;
+    add_header Cache-Control "no-cache";
+    try_files $uri $uri.html "$admin_locale/admin/$admin_section/[...slug].html" =404;
+    error_page 404 /404.html;
+}

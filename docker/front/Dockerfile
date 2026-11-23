@@ -120,17 +120,3 @@ RUN set -eux; \
 
 # The admin on 3000 and the example app on 3001, see start:int in front/package.json.
 CMD ["yarn", "start:int"]
-
-
-
-# "build" stage
-# depends on the "common" stage above
-FROM gally_pwa_common AS gally_pwa_prod
-
-ENV NODE_ENV production
-ARG NEXT_PUBLIC_ENTRYPOINT
-
-RUN set -eux; \
-	yarn build
-
-CMD ["yarn", "start"]

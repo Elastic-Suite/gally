@@ -48,6 +48,13 @@ services:
   router:
     build:
       context: ./docker/router
+      target: gally_router_prod
+      additional_contexts:
+        front_src: ./front
+      args:
+        - NEXT_PUBLIC_ENTRYPOINT=${SERVER_NAME:-gally.localhost}
+        - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
+        - NEXT_PUBLIC_API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-api}
     ports:
       - "80:80"
       - "443:443"
@@ -58,16 +65,15 @@ services:
     depends_on:
       php:
         condition: service_started
-      pwa:
-        condition: service_started
       certbot:
         condition: service_healthy
     environment:
       - SERVER_NAME=${SERVER_NAME:-gally.localhost}
       - API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-api}
-      - PWA_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
       - API_UPSTREAM=${API_UPSTREAM:-php:9000}
-      - EXAMPLE_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
+      # Node front upstreams: empty in production, where the router serves the pre-rendered admin itself
+      - PWA_UPSTREAM=${PWA_UPSTREAM:-}
+      - EXAMPLE_UPSTREAM=${EXAMPLE_UPSTREAM:-}
       # Set to false when TLS is terminated upstream (Traefik, ingress, load balancer...): the app is then served over plain HTTP on port 80
       - HTTPS_ENABLED=${HTTPS_ENABLED:-true}
     labels:
@@ -109,10 +115,13 @@ services:
       retries: 3
       start_period: 10s
   
+  # Node admin server, only for dev, CI and int (enabled in their compose files): in production the router serves the pre-rendered admin
   pwa:
+    profiles:
+      - node
     build:
       context: ./docker/front
-      target: gally_pwa_prod
+      target: gally_pwa_int
       additional_contexts:
         front_src: ./front
       args:
