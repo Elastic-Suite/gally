@@ -3,7 +3,7 @@
 Navigation guide for the Gally monorepo. Read this before grepping: it tells you **which repo and
 which directory** owns a concern, so you can go straight to the right files.
 
-Gally is an API-first e-commerce searchandising engine (Symfony 7.4 + API Platform 4 + OpenSearch)
+Gally is an API-first e-commerce searchandising engine (Symfony + API Platform + OpenSearch)
 with a Next.js back-office, a shared React component library, a JS/TS SDK, and a demo storefront.
 
 This file answers *where is the code*. Skills answer *what do I do*: each loads when the work
@@ -94,8 +94,9 @@ user cares about. E2E tests assume that clean state.
 
 ## 4. Conventions
 
-- **PHP** 8.4, Symfony 7.4, API Platform 4. `php-cs-fixer` + `phpstan` configs are per-repo
-  (`.php-cs-fixer.dist.php`, `phpstan.neon.dist`). Modules are self-contained bundles.
+- **PHP**, Symfony, API Platform: versions are in `api/composer.json`. `php-cs-fixer` + `phpstan`
+  configs are per-repo (`.php-cs-fixer.dist.php`, `phpstan.neon.dist`). Modules are
+  self-contained bundles.
 - **TS/JS**: eslint + prettier per workspace root. Jest for pwa/components/shared, vitest for the
   SDK, Playwright for e2e.
 - **Commits**: conventional-commit, e.g. `feat(#1379782): example app i18n`. Commit in the repo
